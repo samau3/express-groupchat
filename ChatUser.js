@@ -62,6 +62,19 @@ class ChatUser {
     });
   }
 
+  /** Handle a joke: broadcast to user.
+   *
+   * @param text {string} joke to send
+   * */
+  handleJoke() {
+    this.send(JSON.stringify({
+      name: "Server",
+      type: "joke",
+      text: "What do you call eight hobbits? A hob-byte!",
+    }));
+  }
+
+
   /** Handle messages from client:
    *
    * @param jsonData {string} raw message data
@@ -77,6 +90,7 @@ class ChatUser {
 
     if (msg.type === "join") this.handleJoin(msg.name);
     else if (msg.type === "chat") this.handleChat(msg.text);
+    else if (msg.type === "joke") this.handleJoke();
     else throw new Error(`bad message: ${msg.type}`);
   }
 
