@@ -33,7 +33,9 @@ ws.onmessage = function (evt) {
     item = $(`<li><b>${msg.name}: </b>${msg.text}</li>`);
   } else if (msg.type === "joke") {
     item = $(`<li><b>${msg.name}: </b>${msg.text}</li>`);
-  } else {
+  } else if (msg.type === "members") {
+    item = $(`<li><b>${msg.name}: </b>${msg.text}</li>`);
+  }else {
     return console.error(`bad message: ${msg}`);
   }
 
@@ -62,7 +64,9 @@ $("form").submit(function (evt) {
   let data;
   if ($("#m").val() === "/joke") {
     data = { type: "joke", text: $("#m").val() };
-  } else {
+  } else if ($("#m").val() === "/members") {
+    data = { type: "members", text: $("#m").val() };
+  }else {
     data = { type: "chat", text: $("#m").val() };
   }
   console.log(data)

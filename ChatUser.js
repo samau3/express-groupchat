@@ -75,6 +75,25 @@ class ChatUser {
   }
 
 
+  /** Handle members: broadcast to user.
+ *
+ * @param text {string} joke to send
+ * */
+  handleMembers() {
+    let currentMembers = [];
+    for (let member of this.room.members){
+      currentMembers.push(member.name);
+    }
+
+
+    this.send(JSON.stringify({
+      name: "Server",
+      type: "members",
+      text: `${currentMembers}`
+    }));
+  }
+
+
   /** Handle messages from client:
    *
    * @param jsonData {string} raw message data
@@ -91,6 +110,7 @@ class ChatUser {
     if (msg.type === "join") this.handleJoin(msg.name);
     else if (msg.type === "chat") this.handleChat(msg.text);
     else if (msg.type === "joke") this.handleJoke();
+    else if (msg.type === "members") this.handleMembers();
     else throw new Error(`bad message: ${msg.type}`);
   }
 
